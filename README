@@ -6,4 +6,4 @@ The predictor attempts to find repetitious low-dimensional, discontinuous "shape
 
 To compile, this code needs a red-black tree implementation (included, see license), and Eigen 3. This source also includes modified arithmetic compression code which was made available for unrestricted use by the original author.
 
-[1] Wu, X., Zhai, G., Yang, X., Zhang, W. Adaptive sequential prediction of multidimensional signals with applications to lossless image coding. IEEE Transactions on Image Processing, 2011, 20 (1), pp. 36-42. 
+[1] Wu, X., Zhai, G., Yang, X., Zhang, W. Adaptive sequential prediction of multidimensional signals with applications to lossless image coding. IEEE Transactions on Image Processing, 2011, 20 (1), pp. 36-42.
