@@ -1,0 +1,85 @@
+#include "domainModel/xMDLPAR/xContextRepository.cpp"
+
+domainModel::xMDLPAR::xContextRepository::xContextRepository()
+{
+    tree = RBTreeCreate(KeyCompare, KeyDestroy, InfoDestroy, KeyPrint, InfoPrint);
+}
+
+domainModel::xMDLPAR::xContextRepository::~xContextRepository()
+{
+    RBTreeDestroy(tree);
+}
+
+double*
+domainModel::xMDLPAR::xContextRepository::addContext(xContext theContext)
+{
+    if (!theContext.isCompleteContext) return;
+    xContext* info_ptr = new xContext(theContext);
+    double* key_ptr = (double*)malloc(sizeof(double));
+    *key_ptr = xConverter::toOneDee(theContext);
+
+    rb_red_blk_node* newNode;
+
+    RBTreeInsert(tree,key_ptr,info_ptr); //want duplicates
+
+    return key_ptr;
+}
+
+domainModel::xMDLPAR::xContextList
+domainModel::xMDLPAR::xContextRepository::addContextAndGetSimilarContexts(xContext theContext)
+{
+    domainModel::xMDLPAR::xContextList theContextList;
+    double* key_ptr = addContext(theContext);
+    rb_red_blk_node* startingNode = RBExactQuery(tree,key_ptr); //may not be exact same one
+    //could potentially be smart and traverse to correct one
+    rb_red_blk_node* currentNode;
+
+    //look at some predecessors
+    currentNode = startingNode;
+    for (int i = 0; i<G_MAGIC_NUMBER_NUM_APPROX_NEIGHBORS_TO_CHECK/2; i++)
+    {
+        nextNode=TreePredecessor(tree,currentNode);
+        if(tree->nil == currentNode) break;
+        if( ((xContext*)startingNode.info)->contextStartIndex == ((xContext*)currentNode.info)->contextStartIndex) continue; //check we didn't hit real starting node
+        if (domainModel::xMDLPAR::xPredictor::theContextsAreSimilarEnough((xContext*)startingNode.info, (xContext*)currentNode.info))
+            theContextList.addContext(xContext(*((xContext*)currentNode.info)));
+    }
+
+    //look at some successors
+    nextNode = currentNode;
+    for (int i = 0; i<G_MAGIC_NUMBER_NUM_APPROX_NEIGHBORS_TO_CHECK/2; i++)
+    {
+        nextNode=TreeSuccessor(tree,currentNode);
+        if(tree->nil == currentNode) break;
+        if(startingNode.info->contextStartIndex == currentNode.info->contextStartIndex) continue; //check we didn't hit real starting node
+        //check it's not starting node
+        //if it's close enough, add
+    }
+
+    return theContextList;
+}
+
+/////////////
+
+void
+domainModel::xMDLPAR::xContextRepository::KeyCompare(const void* a, const void* b)
+{
+    if( *(double*)a > *(double*)b) return(1);
+    if( *(double*)b > *(double*)b) return(-1);
+    return(0);
+}
+
+void
+domainModel::xMDLPAR::xContextRepository::KeyDestroy(void* a)
+{
+    free((double*)a);
+}
+
+void
+domainModel::xMDLPAR::xContextRepository::InfoDestroy(void *a)
+{
+    delete((xContext*)a);
+}
+
+void domainModel::xMDLPAR::xContextRepository::KeyPrint(void *a){;}
+void domainModel::xMDLPAR::xContextRepository::InfoPrint(void *a){;}
