@@ -4,6 +4,6 @@ From their abstract: "Our main result is a new technique of sequentializing a mu
 
 The predictor attempts to find repetitious low-dimensional, discontinuous "shapes" in a high-dimensional manifold. I used the red-black tree to implement fast, fuzzy high-dimensional context matching (i.e. high-dimensional approximate search), under certain conditions.
 
-[1] Wu, X., Zhai, G., Yang, X., Zhang, W. Adaptive sequential prediction of multidimensional signals with applications to lossless image coding. IEEE Transactions on Image Processing, 2011, 20 (1), pp. 36-42. 
-
 To compile, this code needs a red-black tree implementation (included, see license), and Eigen 3. This source also includes modified arithmetic compression code which was made available for unrestricted use by the original author.
+
+[1] Wu, X., Zhai, G., Yang, X., Zhang, W. Adaptive sequential prediction of multidimensional signals with applications to lossless image coding. IEEE Transactions on Image Processing, 2011, 20 (1), pp. 36-42. 
