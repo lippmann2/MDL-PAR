@@ -2,7 +2,7 @@ This is an object-oriented implementation in C++ of Wu et al. (2011)'s MDL-PAR c
 
 From their abstract: "Our main result is a new technique of sequentializing a multidimensional signal into a sequence of nested contexts of increasing order to facilitate the MDL search for the order and the support shape of the predictor."
 
-The predictor attempts to find repetitious low-dimensional, discontinuous "shapes" in a high-dimensional manifold. I used the red-black tree to implement fast, fuzzy high-dimensional context matching (i.e. high-dimensional approximate search), under certain conditions.
+The predictor attempts to find repetitious low-dimensional, discontinuous "shapes" in a high-dimensional manifold. I used a red-black tree to implement fast, fuzzy high-dimensional context matching (i.e. high-dimensional approximate search), under certain conditions.
 
 To compile, this code needs a red-black tree implementation (included, see license), and Eigen 3. This source also includes modified arithmetic compression code which was made available for unrestricted use by the original author.
 
